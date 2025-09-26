@@ -5,10 +5,12 @@ import FeatureTile from "@/components/dashboard/FeatureTile";
 import RippleCursor from "@/components/agrisync/RippleCursor";
 import { useLanguage } from "@/context/LanguageContext";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const { t, lang } = useLanguage();
   const { speak, supports } = useSpeechSynthesis({ rate: 0.95 });
+  const navigate = useNavigate();
   const name = "Raju";
   const greeting = `${t("greeting")} ${name}!`;
   const summary = `${greeting}. Healthy zones 60 percent, attention 25 percent, critical 15 percent.`;
@@ -34,11 +36,11 @@ export default function Dashboard() {
         <FarmScene />
 
         <section className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          <FeatureTile icon={<span>💧</span>} label={t("soil_health")} color="#2E7D32" onClick={() => supports && speak("Soil moisture moderate", { lang: `${lang}-IN` as any })} />
+          <FeatureTile icon={<span>💧</span>} label={t("soil_health")} color="#2E7D32" onClick={() => { if (supports) speak("Soil moisture moderate", { lang: `${lang}-IN` as any }); navigate('/soil?lang='+lang); }} />
           <FeatureTile icon={<span>🌍</span>} label={t("farm_view")} color="#43A047" />
           <FeatureTile icon={<span>🚜</span>} label={t("farm_safety")} color="#66BB6A" />
           <FeatureTile icon={<span>💡</span>} label={t("next_step")} color="#F9A825" />
-          <FeatureTile icon={<span>📊</span>} label={t("report_analysis")} color="#2E7D32" />
+          <FeatureTile icon={<span>📊</span>} label={t("report_analysis")} color="#2E7D32" onClick={() => navigate('/reports?lang='+lang)} />
         </section>
 
         <section className="mt-6">
