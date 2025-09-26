@@ -12,6 +12,8 @@ import Dashboard from "./pages/Dashboard";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Settings from "./pages/Settings";
+import Soil from "./pages/Soil";
+import Reports from "./pages/Reports";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/soil" element={<Soil />} />
+            <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
