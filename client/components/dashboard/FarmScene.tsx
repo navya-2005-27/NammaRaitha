@@ -6,7 +6,8 @@ function Tree({ x, z }: { x: number; z: number }) {
   const group = useRef<any>(null);
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    if (group.current) group.current.rotation.z = Math.sin(t * 0.6 + x + z) * 0.03;
+    if (group.current)
+      group.current.rotation.z = Math.sin(t * 0.6 + x + z) * 0.03;
   });
   return (
     <group ref={group} position={[x, 0, z]}>
@@ -71,7 +72,15 @@ function HealthPatch({ x, z, color }: { x: number; z: number; color: string }) {
 }
 
 export default function FarmScene() {
-  const trees = useMemo(() => Array.from({ length: 10 }).map((_, i) => ({ x: -3 + Math.random() * 6, z: -3 + Math.random() * 6, key: i })), []);
+  const trees = useMemo(
+    () =>
+      Array.from({ length: 10 }).map((_, i) => ({
+        x: -3 + Math.random() * 6,
+        z: -3 + Math.random() * 6,
+        key: i,
+      })),
+    [],
+  );
   return (
     <div className="w-full h-[380px] rounded-2xl overflow-hidden border bg-white/60 backdrop-blur">
       <Canvas camera={{ position: [4, 3, 4], fov: 50 }} dpr={[1, 2]}>
@@ -87,13 +96,20 @@ export default function FarmScene() {
         <HealthPatch x={1.5} z={-0.5} color="#FBC02D" />
         <HealthPatch x={0} z={2.0} color="#E53935" />
         {/* Props */}
-        {trees.map((t) => <Tree key={t.key} x={t.x} z={t.z} />)}
+        {trees.map((t) => (
+          <Tree key={t.key} x={t.x} z={t.z} />
+        ))}
         <Hut x={-1.2} z={1.4} />
         <Hut x={2.2} z={-1.2} />
         {/* Clouds */}
         <Cloud x={-2} z={-3} scale={1.2} />
         <Cloud x={2} z={2} scale={0.9} />
-        <OrbitControls enablePan={false} maxPolarAngle={Math.PI / 2.2} minDistance={3} maxDistance={7} />
+        <OrbitControls
+          enablePan={false}
+          maxPolarAngle={Math.PI / 2.2}
+          minDistance={3}
+          maxDistance={7}
+        />
       </Canvas>
     </div>
   );

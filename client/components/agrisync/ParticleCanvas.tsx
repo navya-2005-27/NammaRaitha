@@ -1,9 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import { useFPS } from "@/hooks/useFPS";
 
-interface Particle { x: number; y: number; vx: number; vy: number; size: number; }
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+}
 
-export default function ParticleCanvas({ className = "", color = "#00F0FF" }: { className?: string; color?: string; }) {
+export default function ParticleCanvas({
+  className = "",
+  color = "#00F0FF",
+}: {
+  className?: string;
+  color?: string;
+}) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fps = useFPS(1000);
   const target = useRef({ x: 0, y: 0 });
@@ -26,10 +38,20 @@ export default function ParticleCanvas({ className = "", color = "#00F0FF" }: { 
     };
     create();
 
-    const handle = (e: MouseEvent) => { const rect = canvas.getBoundingClientRect(); target.current.x = e.clientX - rect.left; target.current.y = e.clientY - rect.top; };
+    const handle = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      target.current.x = e.clientX - rect.left;
+      target.current.y = e.clientY - rect.top;
+    };
     canvas.addEventListener("mousemove", handle);
 
-    const onResize = () => { width = canvas.clientWidth; height = canvas.clientHeight; canvas.width = width; canvas.height = height; create(); };
+    const onResize = () => {
+      width = canvas.clientWidth;
+      height = canvas.clientHeight;
+      canvas.width = width;
+      canvas.height = height;
+      create();
+    };
     window.addEventListener("resize", onResize);
 
     let raf = 0;
@@ -39,16 +61,30 @@ export default function ParticleCanvas({ className = "", color = "#00F0FF" }: { 
       ctx.clearRect(0, 0, width, height);
       ctx.globalCompositeOperation = "lighter";
       for (const p of particles.current) {
-        const dx = target.current.x - p.x; const dy = target.current.y - p.y; const d = Math.hypot(dx, dy) + 0.01;
-        p.vx += (dx / d) * 0.005; p.vy += (dy / d) * 0.005;
-        p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > width) p.vx *= -1; if (p.y < 0 || p.y > height) p.vy *= -1;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = color; ctx.globalAlpha = 0.8; ctx.fill();
+        const dx = target.current.x - p.x;
+        const dy = target.current.y - p.y;
+        const d = Math.hypot(dx, dy) + 0.01;
+        p.vx += (dx / d) * 0.005;
+        p.vy += (dy / d) * 0.005;
+        p.vx *= 0.98;
+        p.vy *= 0.98;
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 0.8;
+        ctx.fill();
       }
     };
     raf = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", onResize); canvas.removeEventListener("mousemove", handle); };
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+      canvas.removeEventListener("mousemove", handle);
+    };
   }, [fps, color]);
 
   return <canvas ref={canvasRef} className={className} />;

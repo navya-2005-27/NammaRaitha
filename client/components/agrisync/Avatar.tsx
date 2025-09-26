@@ -1,9 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 
-export default function Avatar({ onSpeak }: { onSpeak?: (phrase: string) => void }) {
+export default function Avatar({
+  onSpeak,
+}: {
+  onSpeak?: (phrase: string) => void;
+}) {
   const [hover, setHover] = useState(false);
-  const { supports, speak } = useSpeechSynthesis({ rate: 0.95, voiceNamePrefer: ["Google", "Microsoft"] });
+  const { supports, speak } = useSpeechSynthesis({
+    rate: 0.95,
+    voiceNamePrefer: ["Google", "Microsoft"],
+  });
   const cycleRef = useRef<number | null>(null);
   const [phase, setPhase] = useState<"idle" | "wave" | "tip">("idle");
 
@@ -11,12 +18,22 @@ export default function Avatar({ onSpeak }: { onSpeak?: (phrase: string) => void
     if (!hover) return;
     const seq = ["wave", "tip", "idle"] as const;
     let i = 0;
-    const loop = () => { setPhase(seq[i % seq.length]); i++; cycleRef.current = window.setTimeout(loop, 900); };
+    const loop = () => {
+      setPhase(seq[i % seq.length]);
+      i++;
+      cycleRef.current = window.setTimeout(loop, 900);
+    };
     loop();
-    return () => { if (cycleRef.current) clearTimeout(cycleRef.current); setPhase("idle"); };
+    return () => {
+      if (cycleRef.current) clearTimeout(cycleRef.current);
+      setPhase("idle");
+    };
   }, [hover]);
 
-  const say = (text: string) => { if (supports) speak(text, { pitch: 1 }); onSpeak?.(text); };
+  const say = (text: string) => {
+    if (supports) speak(text, { pitch: 1 });
+    onSpeak?.(text);
+  };
 
   return (
     <div
@@ -27,10 +44,19 @@ export default function Avatar({ onSpeak }: { onSpeak?: (phrase: string) => void
       aria-label="Farmer guide avatar"
       role="img"
     >
-      <div className={`absolute inset-0 rounded-full bg-gradient-to-br from-[hsl(var(--agri-neon))] to-[hsl(var(--agri-green))] opacity-70 blur-2xl animate-pulse-slow`} />
+      <div
+        className={`absolute inset-0 rounded-full bg-gradient-to-br from-[hsl(var(--agri-neon))] to-[hsl(var(--agri-green))] opacity-70 blur-2xl animate-pulse-slow`}
+      />
       <div
         className={`absolute inset-0 rounded-full bg-[hsl(var(--background))] shadow-xl flex items-center justify-center transition-transform duration-500 ${phase === "idle" ? "animate-breathe" : ""}`}
-        style={{ transform: phase === "wave" ? "rotate(-3deg)" : phase === "tip" ? "rotate(3deg)" : undefined }}
+        style={{
+          transform:
+            phase === "wave"
+              ? "rotate(-3deg)"
+              : phase === "tip"
+                ? "rotate(3deg)"
+                : undefined,
+        }}
       >
         <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden>
           <defs>
@@ -46,15 +72,34 @@ export default function Avatar({ onSpeak }: { onSpeak?: (phrase: string) => void
           <path d="M30,45 L90,45 L78,28 L42,28 Z" fill="#d8b35f" />
           <circle cx="50" cy="60" r="3" fill="#000" />
           <circle cx="70" cy="60" r="3" fill="#000" />
-          <path d="M50,72 Q60,78 70,72" stroke="#000" strokeWidth="3" fill="none" />
+          <path
+            d="M50,72 Q60,78 70,72"
+            stroke="#000"
+            strokeWidth="3"
+            fill="none"
+          />
           {phase !== "tip" ? (
             <g transform="translate(90,55)">
-              <rect x="-6" y="-20" width="12" height="30" rx="6" fill="#c68642"/>
+              <rect
+                x="-6"
+                y="-20"
+                width="12"
+                height="30"
+                rx="6"
+                fill="#c68642"
+              />
               <circle cx="0" cy="-24" r="6" fill="#c68642" />
             </g>
           ) : (
             <g transform="translate(90,45) rotate(-20)">
-              <rect x="-6" y="-20" width="12" height="30" rx="6" fill="#c68642"/>
+              <rect
+                x="-6"
+                y="-20"
+                width="12"
+                height="30"
+                rx="6"
+                fill="#c68642"
+              />
               <circle cx="0" cy="-24" r="6" fill="#c68642" />
             </g>
           )}

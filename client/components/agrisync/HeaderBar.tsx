@@ -11,9 +11,25 @@ export default function HeaderBar() {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between animate-slide-down">
         <div className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-lime-500 grid place-items-center shadow-lg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20c2-5 6-8 8-8s6 3 8 8"/><path d="M12 2v4"/><path d="M2 12h4"/><path d="M18 12h4"/></svg>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M4 20c2-5 6-8 8-8s6 3 8 8" />
+              <path d="M12 2v4" />
+              <path d="M2 12h4" />
+              <path d="M18 12h4" />
+            </svg>
           </div>
-          <div className="font-extrabold tracking-tight text-lg">{t("app_name")}</div>
+          <div className="font-extrabold tracking-tight text-lg">
+            {t("app_name")}
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <select
@@ -27,8 +43,20 @@ export default function HeaderBar() {
             <option value="kn">ಕನ್ನಡ</option>
             <option value="ta">தமிழ்</option>
           </select>
-          <button onClick={() => navigate("/login")} className="rounded-full px-4 py-1.5 text-white shadow-md hover:shadow-lg focus:outline-none" style={{ background: "linear-gradient(90deg,#2E7D32,#43A047)" }}>{t("login")}</button>
-          <button onClick={() => navigate("/login?signup=1")} className="rounded-full px-4 py-1.5 text-white shadow-md hover:shadow-lg focus:outline-none" style={{ background: "linear-gradient(90deg,#43A047,#66BB6A)" }}>{t("signup")}</button>
+          <button
+            onClick={() => navigate("/login")}
+            className="rounded-full px-4 py-1.5 text-white shadow-md hover:shadow-lg focus:outline-none"
+            style={{ background: "linear-gradient(90deg,#2E7D32,#43A047)" }}
+          >
+            {t("login")}
+          </button>
+          <button
+            onClick={() => navigate("/login?signup=1")}
+            className="rounded-full px-4 py-1.5 text-white shadow-md hover:shadow-lg focus:outline-none"
+            style={{ background: "linear-gradient(90deg,#43A047,#66BB6A)" }}
+          >
+            {t("signup")}
+          </button>
         </div>
       </div>
     </header>

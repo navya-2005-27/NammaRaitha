@@ -19,14 +19,29 @@ function Particles({ color = "#4CAF50" }: { color?: string }) {
   return (
     <points ref={ref}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
+        <bufferAttribute
+          attach="attributes-position"
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
       </bufferGeometry>
-      <pointsMaterial color={color} size={0.05} sizeAttenuation transparent opacity={0.8} />
+      <pointsMaterial
+        color={color}
+        size={0.05}
+        sizeAttenuation
+        transparent
+        opacity={0.8}
+      />
     </points>
   );
 }
 
-export default function SoilParticles({ color = "#4CAF50" }: { color?: string }) {
+export default function SoilParticles({
+  color = "#4CAF50",
+}: {
+  color?: string;
+}) {
   return (
     <div className="w-full h-56 rounded-xl overflow-hidden border bg-white/60 backdrop-blur">
       <Canvas camera={{ position: [0, 0, 6], fov: 60 }}>
