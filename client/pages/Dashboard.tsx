@@ -38,8 +38,8 @@ export default function Dashboard() {
         <section className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           <FeatureTile icon={<span>💧</span>} label={t("soil_health")} color="#2E7D32" onClick={() => { if (supports) speak("Soil moisture moderate", { lang: `${lang}-IN` as any }); navigate('/soil?lang='+lang); }} />
           <FeatureTile icon={<span>🌍</span>} label={t("farm_view")} color="#43A047" />
-          <FeatureTile icon={<span>🚜</span>} label={t("farm_safety")} color="#66BB6A" />
-          <FeatureTile icon={<span>💡</span>} label={t("next_step")} color="#F9A825" />
+          <FeatureTile icon={<span>🚜</span>} label={t("farm_safety")} color="#66BB6A" onClick={() => navigate('/security?lang='+lang)} />
+          <FeatureTile icon={<span>💡</span>} label={t("next_step")} color="#F9A825" onClick={() => navigate('/recommendations?lang='+lang)} />
           <FeatureTile icon={<span>📊</span>} label={t("report_analysis")} color="#2E7D32" onClick={() => navigate('/reports?lang='+lang)} />
         </section>
 
