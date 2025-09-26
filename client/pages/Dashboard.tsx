@@ -11,7 +11,7 @@ export default function Dashboard() {
   const { t, lang } = useLanguage();
   const { speak, supports } = useSpeechSynthesis({ rate: 0.95 });
   const navigate = useNavigate();
-  const name = "Raju";
+  const name = "RAITHA";
   const greeting = `${t("greeting")} ${name}!`;
   const summary = `${greeting}. Healthy zones 60 percent, attention 25 percent, critical 15 percent.`;
 
