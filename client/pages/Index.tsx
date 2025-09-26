@@ -21,8 +21,7 @@ export default function Index() {
   }, [playWhooshChime]);
 
   const onLanguageSelected = (l: Language) => {
-    // route to dashboard placeholder
-    navigate("/dashboard?lang=" + l.id);
+    navigate("/welcome?lang=" + l.id);
   };
 
   return (
