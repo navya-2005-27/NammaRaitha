@@ -35,7 +35,16 @@ export default function Index() {
       </header>
 
       <div className="h-screen w-full relative">
-        <div className={`absolute inset-y-0 left-0 ${merged ? "w-[30%]" : "w-1/2"} transition-[width,transform] duration-700 ease-out ${revealed ? "translate-x-0" : "-translate-x-full"}`}>
+        <div
+          className={`absolute inset-y-0 left-0 ${merged ? "w-[30%]" : "w-1/2"} transition-[width,transform] duration-700 ease-out ${revealed ? "translate-x-0" : "-translate-x-full"}`}
+          onMouseMove={(e) => {
+            const el = e.currentTarget; const r = el.getBoundingClientRect();
+            const rx = ((e.clientY - r.top) / r.height - 0.5) * -4; // -2..2 deg
+            const ry = ((e.clientX - r.left) / r.width - 0.5) * 4;
+            el.style.transform = `${revealed ? "translateX(0)" : "translateX(-100%)"} perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+          }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = revealed ? "translateX(0)" : "translateX(-100%)"; }}
+        >
           <TechPanel merged={merged} />
         </div>
         <div className={`absolute inset-y-0 right-0 ${merged ? "w-[30%]" : "w-1/2"} transition-[width,transform] duration-700 ease-out ${revealed ? "translate-x-0" : "translate-x-full"}`}>
