@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import RippleCursor from "@/components/agrisync/RippleCursor";
 import { useLanguage } from "@/context/LanguageContext";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const { t, lang } = useLanguage();
   const { speak, supports } = useSpeechSynthesis({ rate: 0.95 });
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault(); setLoading(true);
     if (supports) speak("Logging in, please wait", { lang: `${lang}-IN` as any });
-    setTimeout(() => setLoading(false), 1500);
+    setTimeout(() => { setLoading(false); navigate(`/dashboard?lang=${lang}`); }, 1200);
   };
 
   return (
