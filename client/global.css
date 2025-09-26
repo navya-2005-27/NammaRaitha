@@ -57,6 +57,15 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* AgriSync palette (HSL) */
+    --agri-neon: 184 100% 50%; /* #00F0FF */
+    --agri-green: 122 39% 49%; /* #4CAF50 */
+    --agri-navy: 212 65% 11%; /* #0A1A2F */
+    --agri-brown: 18 18% 47%; /* #8D6E63 */
+    --glow-white: 187 72% 93%; /* #E0F7FA */
+    --sky-blue: 199 92% 85%; /* #B3E5FC */
+    --earth-warm: 39 38% 93%; /* #F5F0E6 */
   }
 
   .dark {
@@ -95,6 +104,14 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --agri-neon: 184 100% 55%;
+    --agri-green: 122 39% 55%;
+    --agri-navy: 212 55% 10%;
+    --agri-brown: 18 18% 55%;
+    --glow-white: 187 72% 85%;
+    --sky-blue: 199 92% 70%;
+    --earth-warm: 39 38% 18%;
   }
 }
 

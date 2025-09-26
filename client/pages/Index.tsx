@@ -1,62 +1,52 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import TechPanel from "@/components/agrisync/TechPanel";
+import FarmPanel from "@/components/agrisync/FarmPanel";
+import CenterPanel from "@/components/agrisync/CenterPanel";
+import VoiceAssistantButton from "@/components/agrisync/VoiceAssistantButton";
+import { useSound } from "@/hooks/useSound";
+import { useNavigate } from "react-router-dom";
+import type { Language } from "@/components/agrisync/LanguageGrid";
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
+  const [revealed, setRevealed] = useState(false);
+  const [merged, setMerged] = useState(false);
+  const [showCenter, setShowCenter] = useState(false);
+  const { playWhooshChime } = useSound();
+  const navigate = useNavigate();
 
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
+  useEffect(() => {
+    const t1 = setTimeout(() => setRevealed(true), 10); // start entrance
+    const t2 = setTimeout(() => { setMerged(true); playWhooshChime(); setTimeout(() => setShowCenter(true), 600); }, 1500);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [playWhooshChime]);
+
+  const onLanguageSelected = (l: Language) => {
+    // route to dashboard placeholder
+    navigate("/dashboard?lang=" + l.id);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
+    <div className="min-h-screen relative overflow-hidden bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
+      <header className="absolute inset-x-0 top-4 flex justify-center z-20 pointer-events-none">
+        <div className="px-4 py-2 rounded-full shadow-lg backdrop-blur-md bg-white/70 pointer-events-auto flex items-center gap-3">
+          <span className="text-xl font-extrabold tracking-tight" style={{ background: "linear-gradient(90deg, #00F0FF, #4CAF50)", WebkitBackgroundClip: "text", color: "transparent" }}>AgriSync</span>
+          <span className="text-sm opacity-80">Where Tech Meets the Soil</span>
+        </div>
+      </header>
+
+      <div className="h-screen w-full relative">
+        <div className={`absolute inset-y-0 left-0 ${merged ? "w-[30%]" : "w-1/2"} transition-[width,transform] duration-700 ease-out ${revealed ? "translate-x-0" : "-translate-x-full"}`}>
+          <TechPanel merged={merged} />
+        </div>
+        <div className={`absolute inset-y-0 right-0 ${merged ? "w-[30%]" : "w-1/2"} transition-[width,transform] duration-700 ease-out ${revealed ? "translate-x-0" : "translate-x-full"}`}>
+          <FarmPanel onCursorNear={() => {}} />
+        </div>
+        {/* Merge gradient */}
+        <div className={`absolute inset-0 transition-opacity duration-700 ${merged ? "opacity-100" : "opacity-0"}`} style={{ background: "linear-gradient(90deg, rgba(0,240,255,0.15), rgba(76,175,80,0.15))" }} />
+        <CenterPanel visible={showCenter} onLanguageSelected={onLanguageSelected} />
       </div>
+
+      <VoiceAssistantButton />
     </div>
   );
 }
