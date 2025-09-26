@@ -43,7 +43,7 @@ export default function Index() {
               color: "transparent",
             }}
           >
-            AgriSync
+            NAMMA RAITHA
           </span>
           <span className="text-sm opacity-80">Where Tech Meets the Soil</span>
         </div>

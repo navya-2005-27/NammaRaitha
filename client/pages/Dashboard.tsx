@@ -11,7 +11,7 @@ export default function Dashboard() {
   const { t, lang } = useLanguage();
   const { speak, supports } = useSpeechSynthesis({ rate: 0.95 });
   const navigate = useNavigate();
-  const name = "Raju";
+  const name = "RAITHA";
   const greeting = `${t("greeting")} ${name}!`;
   const summary = `${greeting}. Healthy zones 60 percent, attention 25 percent, critical 15 percent.`;
 
@@ -46,6 +46,9 @@ export default function Dashboard() {
             </span>
             <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-red-100 text-red-800">
               🔴 Critical
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-blue-100 text-blue-800">
+              🔵 Other farms pesticide entered!!
             </span>
           </div>
         </div>
